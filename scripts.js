@@ -2,12 +2,13 @@ const ENDPOINT = 'https://gist.githubusercontent.com/marcidenmark/b7d5160b19cf97
 
 const mainFoo = async() =>{
   console.log('Document loaded!')
-  let flightsElement = document.getElementById('the-flight-data')
   let flights = await fetchFlightsData(ENDPOINT);
 
   console.log('Creating elements from ' + flights.length + ' array objects.')
   let elfs = await createElementsFromFlightsData(flights)
 
+
+  let flightsElement = document.getElementById('the-flights')
   console.log('Rendering to element: #' + flightsElement.id)
   renderFlightsData(elfs, flightsElement)
 
@@ -31,24 +32,27 @@ const createElementsFromFlightsData = async(fArray) => {
         let d_name = document.createElement('h2')
         d_name.appendChild(document.createTextNode(f['Destination']))
         let ulist = document.createElement('ul')
+        ulist.className = 'list list-group'
 
-        let _fn = document.createElement('li', {'className': 'data-item'});
-        _fn.appendChild(document.createTextNode('Flight #' + f['flightNumber']))
-        ulist.appendChild(_fn)
+        let _li = document.createElement('li')
+        _li.className = 'list-group-item'
+        _li.appendChild(document.createTextNode('Flight #' + f['flightNumber']))
+        ulist.appendChild(_li)
 
-        let _at = document.createElement('li', {'className': 'data-item'});
-        _at.appendChild(document.createTextNode('Arrival: ' + f['arivalTime']))
-        ulist.appendChild(_at)
+        _li = document.createElement('li')
+        _li.className = 'list-group-item'
+        _li.appendChild(document.createTextNode('Arrival: ' + f['arivalTime']))
+        ulist.appendChild(_li)
 
-        let _dt = document.createElement('li', {'className': 'data-item'});
-        _dt.appendChild(document.createTextNode('Departure: ' + f['departureTime']))
-        ulist.appendChild(_dt)
+        _li = document.createElement('li')
+        _li.className = 'list-group-item'
+        _li.appendChild(document.createTextNode('Departure: ' + f['departureTime']))
+        ulist.appendChild(_li)
 
 
         let el = document.createElement("div")
         el.appendChild(d_name)
         el.appendChild(ulist)
-        el.className = 'data-item'
         elarr.push(el)
     }
     return elarr;
@@ -57,6 +61,7 @@ const createElementsFromFlightsData = async(fArray) => {
 const renderFlightsData = async(elArray, parentEl) => {
     for(let i=0, alen=elArray.length; i < alen; i++){
         let el = elArray[i]
+        el.className = 'data-item col-4'
         parentEl.appendChild(el)
     }
 }
