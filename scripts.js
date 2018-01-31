@@ -32,22 +32,23 @@ const createElementsFromFlightsData = async(fArray) => {
         d_name.appendChild(document.createTextNode(f['Destination']))
         let ulist = document.createElement('ul')
 
-        let _fn = document.createElement('li');
+        let _fn = document.createElement('li', {'className': 'data-item'});
         _fn.appendChild(document.createTextNode('Flight #' + f['flightNumber']))
         ulist.appendChild(_fn)
 
-        let _at = document.createElement('li');
+        let _at = document.createElement('li', {'className': 'data-item'});
         _at.appendChild(document.createTextNode('Arrival: ' + f['arivalTime']))
         ulist.appendChild(_at)
 
-        let _dt = document.createElement('li');
+        let _dt = document.createElement('li', {'className': 'data-item'});
         _dt.appendChild(document.createTextNode('Departure: ' + f['departureTime']))
         ulist.appendChild(_dt)
 
 
-        let el = document.createElement("div", {"class": "destination"})
+        let el = document.createElement("div")
         el.appendChild(d_name)
         el.appendChild(ulist)
+        el.className = 'data-item'
         elarr.push(el)
     }
     return elarr;
