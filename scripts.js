@@ -24,44 +24,40 @@ const fetchFlightsData = async(theurl) => {
 }
 
 const createElementsFromFlightsData = async(fArray) => {
-    let elarr = []
+    let elArray = []
 
     for(let i=0, alen=fArray.length; i < alen; i++){
         let f = fArray[i]
         // a bunch of tedious crappy HTML creation code
-        let d_name = document.createElement('h2')
-        d_name.appendChild(document.createTextNode(f['Destination']))
-        let ulist = document.createElement('ul')
-        ulist.className = 'list list-group'
-
-        let _li = document.createElement('li')
-        _li.className = 'list-group-item'
-        _li.appendChild(document.createTextNode('Flight #' + f['flightNumber']))
-        ulist.appendChild(_li)
-
-        _li = document.createElement('li')
-        _li.className = 'list-group-item'
-        _li.appendChild(document.createTextNode('Arrival: ' + f['arivalTime']))
-        ulist.appendChild(_li)
-
-        _li = document.createElement('li')
-        _li.className = 'list-group-item'
-        _li.appendChild(document.createTextNode('Departure: ' + f['departureTime']))
-        ulist.appendChild(_li)
-
-
         let el = document.createElement("div")
-        el.appendChild(d_name)
-        el.appendChild(ulist)
-        elarr.push(el)
+        el.innerHTML = createFlightHtml(f)
+        elArray.push(el)
     }
-    return elarr;
+    return elArray;
+}
+
+
+const createFlightHtml = function(flight){
+  return `
+      <h3>${flight.Destination}</h3>
+       <div class="row">
+          <div class="offset-sm-1 col-sm-4"><strong>Flight</strong></div>
+          <div class="col-sm-6">${flight.flightNumber}</div>
+       </div>
+       <div class="row">
+          <div class="offset-sm-1 col-sm-4"><strong>Arrival</strong></div>
+          <div class="col-sm-6">${flight.arivalTime}</div>
+       </div>
+       <div class="row">
+          <div class="offset-sm-1 col-sm-4"><strong>Departure</strong></div>
+          <div class="col-sm-6">${flight.departureTime}</div>
+       </div>`
 }
 
 const renderFlightsData = async(elArray, parentEl) => {
     for(let i=0, alen=elArray.length; i < alen; i++){
         let el = elArray[i]
-        el.className = 'data-item col-4'
+        el.className = 'data-item col-sm-4'
         parentEl.appendChild(el)
     }
 }
